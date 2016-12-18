@@ -51,6 +51,8 @@
  */
 @property (nonatomic, assign) CGFloat lineWidth UI_APPEARANCE_SELECTOR;
 
+@property (nonatomic, assign) BOOL updatePercentageOfProgressToLabel;
+
 /**
  Change progress animated.
  
