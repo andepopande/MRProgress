@@ -53,6 +53,8 @@
 
 @property (nonatomic, assign) BOOL updatePercentageOfProgressToLabel;
 
+@property (nonatomic, assign) BOOL disableAccessibility;
+
 /**
  Change progress animated.
  

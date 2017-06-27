@@ -64,10 +64,8 @@ static NSString *const MRCircularProgressViewProgressAnimationKey = @"MRCircular
 }
 
 - (void)commonInit {
-    self.isAccessibilityElement = YES;
-    self.accessibilityLabel = NSLocalizedString(@"Determinate Progress", @"Accessibility label for circular progress view");
-    self.accessibilityTraits = UIAccessibilityTraitUpdatesFrequently;
-    
+	 [self setDisableAccessibility:NO];
+
     NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
     self.numberFormatter = numberFormatter;
     numberFormatter.numberStyle = NSNumberFormatterPercentStyle;
@@ -91,6 +89,21 @@ static NSString *const MRCircularProgressViewProgressAnimationKey = @"MRCircular
     self.progress = 0;
     
     [self tintColorDidChange];
+}
+
+- (void)setDisableAccessibility:(BOOL)disableAccessibility
+{
+	_disableAccessibility = disableAccessibility;
+	if (!_disableAccessibility) {
+		 self.isAccessibilityElement = YES;
+		 self.accessibilityLabel = NSLocalizedString(@"Determinate Progress", @"Accessibility label for circular progress view");
+		 self.accessibilityTraits = UIAccessibilityTraitUpdatesFrequently;
+	}
+	else {
+		self.isAccessibilityElement = NO;
+		self.accessibilityLabel = nil;
+		self.accessibilityTraits = UIAccessibilityTraitNone;
+	}
 }
 
 
@@ -180,7 +193,9 @@ static NSString *const MRCircularProgressViewProgressAnimationKey = @"MRCircular
     _progress = progress;
     
     [self updateProgress];
-    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self);
+	 if (!self.disableAccessibility) {
+		 UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self);
+	 }
 }
 
 - (void)updateProgress {
@@ -195,7 +210,9 @@ static NSString *const MRCircularProgressViewProgressAnimationKey = @"MRCircular
 - (void)updateLabel:(float)progress {
 	if (self.updatePercentageOfProgressToLabel) {
 		self.valueLabel.text = [self.numberFormatter stringFromNumber:@(progress)];
-		self.accessibilityValue = self.valueLabel.text;
+		if (!self.disableAccessibility) {
+			self.accessibilityValue = self.valueLabel.text;
+		}
 	}
 }
 
@@ -209,7 +226,9 @@ static NSString *const MRCircularProgressViewProgressAnimationKey = @"MRCircular
     } else {
         self.progress = progress;
     }
-    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self);
+	 if (!self.disableAccessibility) {
+		 UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self);
+	 }
 }
 
 - (void)setAnimationDuration:(CFTimeInterval)animationDuration {
