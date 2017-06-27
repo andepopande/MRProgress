@@ -98,11 +98,13 @@ static NSString *const MRCircularProgressViewProgressAnimationKey = @"MRCircular
 		 self.isAccessibilityElement = YES;
 		 self.accessibilityLabel = NSLocalizedString(@"Determinate Progress", @"Accessibility label for circular progress view");
 		 self.accessibilityTraits = UIAccessibilityTraitUpdatesFrequently;
+		 self.valueLabel.isAccessibilityElement = YES;
 	}
 	else {
 		self.isAccessibilityElement = NO;
 		self.accessibilityLabel = nil;
 		self.accessibilityTraits = UIAccessibilityTraitNone;
+		self.valueLabel.isAccessibilityElement = NO;
 	}
 }
 
