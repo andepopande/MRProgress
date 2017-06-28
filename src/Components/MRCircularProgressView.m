@@ -86,8 +86,8 @@ static NSString *const MRCircularProgressViewProgressAnimationKey = @"MRCircular
     
     self.mayStop = NO;
     
-    self.progress = 0;
-    
+	 _progress = 0;
+	
     [self tintColorDidChange];
 }
 
